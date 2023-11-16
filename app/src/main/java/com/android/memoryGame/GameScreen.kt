@@ -11,7 +11,11 @@ class GameScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.game_screen)
 
+        val bundle = intent.extras
+        val dimensions: IntArray? = bundle!!.getIntArray("dimension")
+
         gameGrid = findViewById(R.id.game_grid)
+        gameGrid.numColumns = dimensions!!.elementAt(0)
 //        val arrayList : ArrayList<String> = ArrayList<String>()
 //
 //        arrayList.add("1")
