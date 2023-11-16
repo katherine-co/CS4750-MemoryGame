@@ -1,4 +1,4 @@
-package com.bignerdranch.android.memoryGame
+package com.android.memoryGame
 
 import org.junit.Test
 
