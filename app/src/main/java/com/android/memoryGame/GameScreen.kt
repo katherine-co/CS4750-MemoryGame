@@ -6,18 +6,18 @@ import androidx.appcompat.app.AppCompatActivity
 
 
 private val ICONS = listOf(
-    R.drawable.test,
-    R.drawable.test,
-    R.drawable.test,
-    R.drawable.test,
-    R.drawable.test,
-    R.drawable.test,
-    R.drawable.test,
-    R.drawable.test,
-    R.drawable.test,
-    R.drawable.test,
-    R.drawable.test,
-    R.drawable.test
+    R.drawable.c1,
+    R.drawable.c2,
+    R.drawable.c3,
+    R.drawable.c4,
+    R.drawable.c5,
+    R.drawable.c6,
+    R.drawable.c7,
+    R.drawable.c8,
+    R.drawable.c9,
+    R.drawable.c10,
+    R.drawable.c11,
+    R.drawable.c12
 )
 class GameScreen : AppCompatActivity() {
 
