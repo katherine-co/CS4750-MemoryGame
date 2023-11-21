@@ -16,15 +16,17 @@ class GameScreen : AppCompatActivity() {
 
         gameGrid = findViewById(R.id.game_grid)
         gameGrid.numColumns = dimensions!!.elementAt(0)
-//        val arrayList : ArrayList<String> = ArrayList<String>()
-//
-//        arrayList.add("1")
-//        arrayList.add("2")
-//        arrayList.add("3")
-//        arrayList.add("4")
-//        arrayList.add("5")
 
-//        val adapter =
-//        gameGrid.adapter =
+        val courseModelArrayList: ArrayList<CardModel> = ArrayList<CardModel>()
+
+        courseModelArrayList.add(CardModel(1, R.drawable.test))
+        courseModelArrayList.add(CardModel(2, R.drawable.test))
+        courseModelArrayList.add(CardModel(3, R.drawable.test))
+        courseModelArrayList.add(CardModel(4, R.drawable.test))
+        courseModelArrayList.add(CardModel(5, R.drawable.test))
+        courseModelArrayList.add(CardModel(6, R.drawable.test))
+
+        val adapter = CardAdapter(this, courseModelArrayList)
+        gameGrid.adapter = adapter
     }
 }
