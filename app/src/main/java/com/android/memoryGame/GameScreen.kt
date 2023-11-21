@@ -4,6 +4,21 @@ import android.os.Bundle
 import android.widget.GridView
 import androidx.appcompat.app.AppCompatActivity
 
+
+private val ICONS = listOf(
+    R.drawable.test,
+    R.drawable.test,
+    R.drawable.test,
+    R.drawable.test,
+    R.drawable.test,
+    R.drawable.test,
+    R.drawable.test,
+    R.drawable.test,
+    R.drawable.test,
+    R.drawable.test,
+    R.drawable.test,
+    R.drawable.test
+)
 class GameScreen : AppCompatActivity() {
 
     private lateinit var gameGrid: GridView
@@ -17,16 +32,16 @@ class GameScreen : AppCompatActivity() {
         gameGrid = findViewById(R.id.game_grid)
         gameGrid.numColumns = dimensions!!.elementAt(0)
 
-        val courseModelArrayList: ArrayList<CardModel> = ArrayList<CardModel>()
+        val cardModelArrayList: ArrayList<CardModel> = ArrayList<CardModel>()
 
-        courseModelArrayList.add(CardModel(1, R.drawable.test))
-        courseModelArrayList.add(CardModel(2, R.drawable.test))
-        courseModelArrayList.add(CardModel(3, R.drawable.test))
-        courseModelArrayList.add(CardModel(4, R.drawable.test))
-        courseModelArrayList.add(CardModel(5, R.drawable.test))
-        courseModelArrayList.add(CardModel(6, R.drawable.test))
+        val numPairs = dimensions!!.elementAt(0) * dimensions!!.elementAt(1) / 2
+        for(i in 0 until numPairs) {
+            cardModelArrayList.add(CardModel(i, ICONS.get(i)))
+            cardModelArrayList.add(CardModel(i, ICONS.get(i)))
+        }
+        cardModelArrayList.shuffle();
 
-        val adapter = CardAdapter(this, courseModelArrayList)
+        val adapter = CardAdapter(this, cardModelArrayList)
         gameGrid.adapter = adapter
     }
 }
