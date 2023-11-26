@@ -1,6 +1,8 @@
 package com.android.memoryGame
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.GridView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -36,12 +38,16 @@ class GameScreen : AppCompatActivity() {
 
         val numPairs = dimensions!!.elementAt(0) * dimensions!!.elementAt(1) / 2
         for(i in 0 until numPairs) {
-            cardModelArrayList.add(CardModel(i, ICONS.get(i)))
-            cardModelArrayList.add(CardModel(i, ICONS.get(i)))
+            cardModelArrayList.add(CardModel(i, ICONS.get(i), true))
+            cardModelArrayList.add(CardModel(i, ICONS.get(i), true))
         }
         cardModelArrayList.shuffle();
 
-        val adapter = CardAdapter(this, cardModelArrayList)
+        val adapter = CardAdapter(this, cardModelArrayList, object: CardAdapter.CardClickListener {
+            override fun onCardClicked(position: Int) {
+                Log.d("Card Clicked", position.toString());
+            }
+        })
         gameGrid.adapter = adapter
     }
 }

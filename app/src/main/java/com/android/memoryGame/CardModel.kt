@@ -1,6 +1,6 @@
 package com.android.memoryGame
 
-class CardModel (private var cardValue: Int, private var imageId: Int){
+class CardModel (private var cardValue: Int, private var imageId: Int, private var isHidden: Boolean){
     fun getCardValue(): Int {
         return cardValue;
     }
@@ -15,5 +15,13 @@ class CardModel (private var cardValue: Int, private var imageId: Int){
 
     fun setImageId(imageId: Int) {
         this.imageId = imageId
+    }
+
+    fun getIsHidden(): Boolean {
+        return isHidden;
+    }
+
+    fun setIsHidden(isHidden: Boolean) {
+        this.isHidden = isHidden;
     }
 }
