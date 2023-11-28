@@ -1,6 +1,7 @@
 package com.android.memoryGame
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.GridView
@@ -27,6 +28,8 @@ private lateinit var adapter: CardAdapter;
 class GameScreen : AppCompatActivity() {
 
     private lateinit var gameGrid: GridView
+    private var previousCardPosition: Int = -1;
+    private var numMatches: Int = 0;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.game_screen)
@@ -55,8 +58,43 @@ class GameScreen : AppCompatActivity() {
         gameGrid.adapter = adapter
     }
     fun cardClicked(position: Int) {
-        cardModelArrayList.get(position).setIsHidden(false);
-        adapter.notifyDataSetChanged();
+        var card = cardModelArrayList.get(position);
+        if(!card.getIsHidden()) {
+            return;
+        }
+        flipCard(position)
+//        card.setIsHidden(false);
+//        adapter.notifyDataSetChanged();
 
+        if (previousCardPosition == -1) {
+//            Log.d("Card Clicked", "set previous card")
+            previousCardPosition = position;
+            return;
+        }
+
+        var previousCard = cardModelArrayList.get(previousCardPosition);
+
+        if(previousCard.getCardValue() == card.getCardValue()) {
+            Log.d("Card Clicked", "Match: $numMatches")
+            numMatches++;
+            previousCardPosition = -1;
+            return;
+        }
+        Handler().postDelayed({
+            flipCard(previousCardPosition)
+            flipCard(position);
+//            previousCard.setIsHidden(true);
+//            adapter.notifyDataSetChanged();
+//            card.setIsHidden(true);
+//            adapter.notifyDataSetChanged();
+//            Log.d("Card Clicked", "Flip Cards back over: ${previousCard!!.getIsHidden()} ${card.getIsHidden()}")
+            previousCardPosition = -1;
+        }, 1000)
+    }
+    fun flipCard(position: Int) {
+        Log.d("Card Clicked", "Flip $position back over")
+        var card = cardModelArrayList.get(position);
+        card.setIsHidden(!card.getIsHidden())
+        adapter.notifyDataSetChanged()
     }
 }
