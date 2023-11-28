@@ -21,6 +21,9 @@ private val ICONS = listOf(
     R.drawable.c11,
     R.drawable.c12
 )
+
+private val cardModelArrayList: ArrayList<CardModel> = ArrayList<CardModel>()
+private lateinit var adapter: CardAdapter;
 class GameScreen : AppCompatActivity() {
 
     private lateinit var gameGrid: GridView
@@ -34,7 +37,7 @@ class GameScreen : AppCompatActivity() {
         gameGrid = findViewById(R.id.game_grid)
         gameGrid.numColumns = dimensions!!.elementAt(0)
 
-        val cardModelArrayList: ArrayList<CardModel> = ArrayList<CardModel>()
+
 
         val numPairs = dimensions!!.elementAt(0) * dimensions!!.elementAt(1) / 2
         for(i in 0 until numPairs) {
@@ -43,11 +46,17 @@ class GameScreen : AppCompatActivity() {
         }
         cardModelArrayList.shuffle();
 
-        val adapter = CardAdapter(this, cardModelArrayList, object: CardAdapter.CardClickListener {
+        adapter = CardAdapter(this, cardModelArrayList, object: CardAdapter.CardClickListener {
             override fun onCardClicked(position: Int) {
+                cardClicked(position)
                 Log.d("Card Clicked", position.toString());
             }
         })
         gameGrid.adapter = adapter
+    }
+    fun cardClicked(position: Int) {
+        cardModelArrayList.get(position).setIsHidden(false);
+        adapter.notifyDataSetChanged();
+
     }
 }
