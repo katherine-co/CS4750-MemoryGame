@@ -66,37 +66,36 @@ class GameScreen : AppCompatActivity() {
     }
     fun cardClicked(position: Int) {
         var card = cardModelArrayList.get(position);
+
+        // If card has already been matched
         if(!card.getIsHidden()) {
             return;
         }
-        flipCard(position)
-//        card.setIsHidden(false);
-//        adapter.notifyDataSetChanged();
 
+        flipCard(position)
+
+        // Check if there is a card to match it to
         if (previousCardPosition == -1) {
-//            Log.d("Card Clicked", "set previous card")
             previousCardPosition = position;
             return;
         }
 
         var previousCard = cardModelArrayList.get(previousCardPosition);
 
+        //Check if the cards match
         if(previousCard.getCardValue() == card.getCardValue()) {
             Log.d("Card Clicked", "Match: $numMatches")
             numMatches++;
             previousCardPosition = -1;
             return;
         }
+
+        // Flip cards back over if cards do not match
         Handler().postDelayed({
             flipCard(previousCardPosition)
             flipCard(position);
-//            previousCard.setIsHidden(true);
-//            adapter.notifyDataSetChanged();
-//            card.setIsHidden(true);
-//            adapter.notifyDataSetChanged();
-//            Log.d("Card Clicked", "Flip Cards back over: ${previousCard!!.getIsHidden()} ${card.getIsHidden()}")
             previousCardPosition = -1;
-        }, 1000)
+        }, 1000) // Flip cards back over after 1 second
     }
     fun flipCard(position: Int) {
         Log.d("Card Clicked", "Flip $position back over")

@@ -30,6 +30,9 @@ class CardAdapter(context: Context, cardModelArrayList: ArrayList<CardModel>, pr
         if (cardModel != null && !cardModel.getIsHidden()) {
             courseIV.setImageResource(cardModel.getImageId())
         }
+        else if(cardModel != null && cardModel.getIsHidden()) {
+            courseIV.setImageResource(R.drawable.ic_launcher_background)
+        }
 
         listItemView.setOnClickListener {
             cardClickListener.onCardClicked(position);
