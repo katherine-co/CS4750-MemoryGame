@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.GridView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -30,17 +31,23 @@ class GameScreen : AppCompatActivity() {
     private lateinit var gameGrid: GridView
     private var previousCardPosition: Int = -1;
     private var numMatches: Int = 0;
+    private lateinit var exitButton: Button;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.game_screen)
+
+        cardModelArrayList.clear()
 
         val bundle = intent.extras
         val dimensions: IntArray? = bundle!!.getIntArray("dimension")
 
         gameGrid = findViewById(R.id.game_grid)
         gameGrid.numColumns = dimensions!!.elementAt(0)
+        exitButton = findViewById(R.id.exitGame)
 
-
+        exitButton.setOnClickListener {
+            showCards()
+        }
 
         val numPairs = dimensions!!.elementAt(0) * dimensions!!.elementAt(1) / 2
         for(i in 0 until numPairs) {
@@ -96,5 +103,12 @@ class GameScreen : AppCompatActivity() {
         var card = cardModelArrayList.get(position);
         card.setIsHidden(!card.getIsHidden())
         adapter.notifyDataSetChanged()
+    }
+
+    fun showCards() {
+        for(i in 0 until cardModelArrayList.size) {
+            cardModelArrayList[i].setIsHidden(false);
+            adapter.notifyDataSetChanged();
+        }
     }
 }
