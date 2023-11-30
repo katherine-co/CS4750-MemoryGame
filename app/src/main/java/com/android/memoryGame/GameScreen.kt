@@ -118,6 +118,9 @@ class GameScreen : AppCompatActivity() {
     }
 
     fun buttonClicked() {
+        if(wait) {
+            return;
+        }
         if (click == 0) {
             click = 1;
             showCards();
@@ -129,6 +132,9 @@ class GameScreen : AppCompatActivity() {
     }
 
     fun showCards() {
+        if(previousCardPosition != -1) {
+            cardModelArrayList[previousCardPosition].setNotFound(true);
+        }
         for(i in 0 until cardModelArrayList.size) {
             if (cardModelArrayList[i].getIsHidden() == true) {
                 cardModelArrayList[i].setIsHidden(false);
