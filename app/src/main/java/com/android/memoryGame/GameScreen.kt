@@ -34,6 +34,7 @@ class GameScreen : AppCompatActivity() {
     private var numPairs: Int = 0;
     private var numComparisons: Int = 0;
     private lateinit var exitButton: Button;
+    private var wait: Boolean = false;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_screen);
@@ -53,15 +54,17 @@ class GameScreen : AppCompatActivity() {
 
         numPairs = dimensions!!.elementAt(0) * dimensions!!.elementAt(1) / 2
         for(i in 0 until numPairs) {
-            cardModelArrayList.add(CardModel(i, ICONS.get(i), true));
-            cardModelArrayList.add(CardModel(i, ICONS.get(i), true));
+            cardModelArrayList.add(CardModel(i, ICONS.get(i), true, false));
+            cardModelArrayList.add(CardModel(i, ICONS.get(i), true, false));
         }
         cardModelArrayList.shuffle();
 
         adapter = CardAdapter(this, cardModelArrayList, object: CardAdapter.CardClickListener {
             override fun onCardClicked(position: Int) {
-                cardClicked(position)
-                Log.d("Card Clicked", position.toString());
+                if(!wait) {
+                    cardClicked(position)
+                    Log.d("Card Clicked", position.toString());
+                }
             }
         })
         gameGrid.adapter = adapter;
@@ -97,12 +100,14 @@ class GameScreen : AppCompatActivity() {
             }
             return;
         }
+        wait = true;
 
         // Flip cards back over if cards do not match
         Handler().postDelayed({
             flipCard(previousCardPosition);
             flipCard(position);
             previousCardPosition = -1;
+            wait = false;
         }, 1000) // Flip cards back over after 1 second
     }
     fun flipCard(position: Int) {
