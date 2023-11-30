@@ -25,7 +25,10 @@ class CardModel (private var cardValue: Int, private var imageId: Int, private v
         this.isHidden = isHidden;
     }
 
+    fun getNotFound(): Boolean {
+        return notFound;
+    }
     fun setNotFound(notFound: Boolean) {
-
+        this.notFound = notFound;
     }
 }
