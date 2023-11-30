@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.GridView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 
@@ -29,6 +30,7 @@ private lateinit var adapter: CardAdapter;
 class GameScreen : AppCompatActivity() {
 
     private lateinit var gameGrid: GridView;
+    private lateinit var counter: TextView;
     private var previousCardPosition: Int = -1;
     private var numMatches: Int = 0;
     private var numPairs: Int = 0;
@@ -45,6 +47,7 @@ class GameScreen : AppCompatActivity() {
         val bundle = intent.extras;
         val dimensions: IntArray? = bundle!!.getIntArray("dimension");
 
+        counter = findViewById(R.id.counter);
         gameGrid = findViewById(R.id.game_grid);
         gameGrid.numColumns = dimensions!!.elementAt(0);
         exitButton = findViewById(R.id.exitGame);
@@ -88,6 +91,7 @@ class GameScreen : AppCompatActivity() {
 
         var previousCard = cardModelArrayList.get(previousCardPosition);
         numComparisons++;
+        counter.text = numComparisons.toString();
 
         //Check if the cards match
         if(previousCard.getCardValue() == card.getCardValue()) {
@@ -98,6 +102,7 @@ class GameScreen : AppCompatActivity() {
             // Check if all cards have been found
             if(numMatches == numPairs) {
                Log.d("Card Clicked", "All cards have been found");
+                click = 1;
             }
             return;
         }
