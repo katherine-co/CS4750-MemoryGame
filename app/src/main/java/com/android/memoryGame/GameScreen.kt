@@ -35,6 +35,7 @@ class GameScreen : AppCompatActivity() {
     private var numComparisons: Int = 0;
     private lateinit var exitButton: Button;
     private var wait: Boolean = false;
+    private var click: Int = 0;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_screen);
@@ -49,7 +50,7 @@ class GameScreen : AppCompatActivity() {
         exitButton = findViewById(R.id.exitGame);
 
         exitButton.setOnClickListener {
-            showCards();
+            buttonClicked();
         }
 
         numPairs = dimensions!!.elementAt(0) * dimensions!!.elementAt(1) / 2
@@ -116,10 +117,24 @@ class GameScreen : AppCompatActivity() {
         adapter.notifyDataSetChanged();
     }
 
+    fun buttonClicked() {
+        if (click == 0) {
+            click = 1;
+            showCards();
+        }
+        else {
+            finish();
+            click = 0;
+        }
+    }
+
     fun showCards() {
         for(i in 0 until cardModelArrayList.size) {
-            cardModelArrayList[i].setIsHidden(false);
-            adapter.notifyDataSetChanged();
+            if (cardModelArrayList[i].getIsHidden() == true) {
+                cardModelArrayList[i].setIsHidden(false);
+                cardModelArrayList[i].setNotFound(true);
+            }
         }
+        adapter.notifyDataSetChanged();
     }
 }
