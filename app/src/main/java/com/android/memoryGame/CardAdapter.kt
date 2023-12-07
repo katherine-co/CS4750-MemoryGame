@@ -2,13 +2,13 @@ package com.android.memoryGame
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
-import android.widget.TextView
+
 
 class CardAdapter(context: Context, cardModelArrayList: ArrayList<CardModel>, private val cardClickListener: CardClickListener) :
     ArrayAdapter<CardModel?>(context, 0, cardModelArrayList as List<CardModel?>) {
@@ -30,13 +30,25 @@ class CardAdapter(context: Context, cardModelArrayList: ArrayList<CardModel>, pr
 
         if (cardModel != null && !cardModel.getIsHidden()) {
             courseIV.setImageResource(cardModel.getImageId());
+            courseIV.scaleType = ImageView.ScaleType.FIT_CENTER;
+
+            //Convert dp to px
+            val width = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                95F,
+                context.resources.displayMetrics
+            ).toInt()
+
+            courseIV.layoutParams.width = width;
         }
         else if(cardModel != null && cardModel.getIsHidden()) {
-            courseIV.setImageResource(R.drawable.ic_launcher_background);
+            courseIV.setImageResource(R.drawable.background);
+            courseIV.scaleType = ImageView.ScaleType.FIT_XY
+            courseIV.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
         }
 
         if(cardModel != null && cardModel.getNotFound()) {
-            listItemView.setBackgroundColor(Color.rgb(255, 0, 0));
+            listItemView.setBackgroundColor(Color.rgb(220, 14, 60));
         }
 
         listItemView.setOnClickListener {
