@@ -23,6 +23,7 @@ class CardAdapter(context: Context, cardModelArrayList: ArrayList<CardModel>, pr
         if (listItemView == null) {
             // Layout Inflater inflates each item to be displayed in GridView.
             listItemView = LayoutInflater.from(context).inflate(R.layout.card_item, parent, false);
+            listItemView.setBackgroundColor(Color.rgb(255,255,255));
         }
 
         val cardModel: CardModel? = getItem(position)

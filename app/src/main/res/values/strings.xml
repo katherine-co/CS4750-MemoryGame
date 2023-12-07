@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MemoryGame</string>
+    <string name="exit">Exit</string>
+    <string name="comparison">Comparison: 0</string>
 </resources>
