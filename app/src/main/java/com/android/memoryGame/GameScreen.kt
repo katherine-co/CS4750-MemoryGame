@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.GridView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 
@@ -91,7 +92,7 @@ class GameScreen : AppCompatActivity() {
 
         var previousCard = cardModelArrayList.get(previousCardPosition);
         numComparisons++;
-        counter.text = numComparisons.toString();
+        counter.text = "Comparisons: $numComparisons";
 
         //Check if the cards match
         if(previousCard.getCardValue() == card.getCardValue()) {
@@ -101,8 +102,10 @@ class GameScreen : AppCompatActivity() {
 
             // Check if all cards have been found
             if(numMatches == numPairs) {
-               Log.d("Card Clicked", "All cards have been found");
+                Log.d("Card Clicked", "All cards have been found");
                 click = 1;
+                val toast = Toast.makeText(this, "You Win", Toast.LENGTH_SHORT) // in Activity
+                toast.show()
             }
             return;
         }
