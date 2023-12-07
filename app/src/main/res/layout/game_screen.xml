@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="#fcfaf8"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.android.memoryGame.GameScreen">
@@ -12,6 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/comparison"
+        android:textColor="#0a2342"
+        android:textStyle="bold"
         android:textSize="20sp"
         android:layout_margin="6dp"
         app:layout_constraintStart_toStartOf="parent"
