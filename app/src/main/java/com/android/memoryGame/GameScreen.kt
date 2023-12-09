@@ -1,5 +1,6 @@
 package com.android.memoryGame
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -29,26 +30,33 @@ private val ICONS = listOf(
 private val cardModelArrayList: ArrayList<CardModel> = ArrayList<CardModel>();
 private lateinit var adapter: CardAdapter;
 class GameScreen : AppCompatActivity() {
-
     private lateinit var gameGrid: GridView;
     private lateinit var counter: TextView;
+    private lateinit var highScore: TextView;
     private var previousCardPosition: Int = -1;
-    private var numMatches: Int = 0;
+    private var numMatches: Int = 0; //score counter
     private var numPairs: Int = 0;
     private var numComparisons: Int = 0;
     private lateinit var exitButton: Button;
     private var wait: Boolean = false;
     private var click: Int = 0;
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_screen);
 
         cardModelArrayList.clear();
 
         val bundle = intent.extras;
+
+
         val dimensions: IntArray? = bundle!!.getIntArray("dimension");
 
         counter = findViewById(R.id.counter);
+        highScore = findViewById(R.id.highscore);
+        highScore.text = "High Score: ${getExistingHighscore()}";
         gameGrid = findViewById(R.id.game_grid);
         gameGrid.numColumns = dimensions!!.elementAt(0);
         exitButton = findViewById(R.id.exitGame);
@@ -74,6 +82,10 @@ class GameScreen : AppCompatActivity() {
         })
         gameGrid.adapter = adapter;
     }
+
+
+
+
     fun cardClicked(position: Int) {
         var card = cardModelArrayList.get(position);
 
@@ -104,6 +116,7 @@ class GameScreen : AppCompatActivity() {
             if(numMatches == numPairs) {
                 Log.d("Card Clicked", "All cards have been found");
                 click = 1;
+                updateHighscore(numComparisons)
                 val toast = Toast.makeText(this, "You Win", Toast.LENGTH_SHORT) // in Activity
                 toast.show()
             }
@@ -151,4 +164,46 @@ class GameScreen : AppCompatActivity() {
         }
         adapter.notifyDataSetChanged();
     }
+
+
+
+    //return highscore based off the difficulty
+    fun getExistingHighscore(): Int {
+        // Retrieve difficulty from Intent
+        var sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        var difficulty = intent.getStringExtra("difficulty") ?: "easy"
+        Log.d("difficulty", difficulty);
+        return when (difficulty) {
+            "easy" -> sharedPreferences.getInt("highscoreEasy", 999)
+            "medium" -> sharedPreferences.getInt("highscoreMedium", 999)
+            "hard" -> sharedPreferences.getInt("highscoreHard", 999)
+            else -> 0
+
+        }
+    }
+
+    fun updateHighscore(currentScore: Int) {
+        var sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        var difficulty = intent.getStringExtra("difficulty") ?: "easy"
+        // Retrieve the existing highscore for the specified difficulty
+        val existingHighscore = getExistingHighscore()
+        Log.d("existing high score:", "$existingHighscore");
+        // Check if the new highscore is greater than the existing highscore
+        if (currentScore < existingHighscore) {
+            // Create highscore achieved message
+            val toast = Toast.makeText(this, "New Highscore!", Toast.LENGTH_SHORT) // in Activity
+            toast.show()
+            // Update the highscore for the specified difficulty
+            with(sharedPreferences.edit()) {
+                when (difficulty) {
+                    "easy" -> putInt("highscoreEasy", currentScore)
+                    "medium" -> putInt("highscoreMedium", currentScore)
+                    "hard" -> putInt("highscoreHard", currentScore)
+                }
+                apply()
+            }
+        }
+    }
+
+
 }

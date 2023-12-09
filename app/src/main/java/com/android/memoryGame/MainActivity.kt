@@ -26,22 +26,25 @@ class MainActivity : AppCompatActivity() {
         hardButton = findViewById(R.id.hard)
 
         easyButton.setOnClickListener {
-            launchGameScreen(intArrayOf(3, 4))
+            launchGameScreen(intArrayOf(3, 4),"easy")
         }
         mediumButton.setOnClickListener {
-            launchGameScreen(intArrayOf(3, 6))
+            launchGameScreen(intArrayOf(3, 6),"medium")
         }
         hardButton.setOnClickListener {
-            launchGameScreen(intArrayOf(4, 6))
+            launchGameScreen(intArrayOf(4, 6),"hard")
         }
     }
 
-    fun launchGameScreen(dimensions: IntArray) {
+    fun launchGameScreen(dimensions: IntArray, difficulty: String) {
         val i = Intent(this,GameScreen::class.java)
 
         var bundle = Bundle()
         //Add your data to bundle
         bundle.putIntArray("dimension", dimensions);
+
+        //add difficulty to intent
+        bundle.putString("difficulty", difficulty)
 
         //Add the bundle to the intent
         i.putExtras(bundle);
